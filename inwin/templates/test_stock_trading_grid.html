@@ -1,0 +1,135 @@
+<link rel="stylesheet" type="text/css" ref="{{ STATIC_URL }}js/jquery-ui-1.8.2.custom.css"/>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="{{ STATIC_URL }}themes/redmond/jquery-ui-1.8.2.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="{{ STATIC_URL }}themes/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="{{ STATIC_URL }}themes/ui.multiselect.css" />
+<style>
+html, body {
+	margin: 0;			/* Remove body margin/padding */
+	padding: 0;
+	overflow: hidden;	/* Remove scroll bars on browser window */	
+    font-size: 75%;
+}
+/*Splitter style */
+
+
+#LeftPane {
+	/* optional, initial splitbar position */
+	overflow: auto;
+}
+/*
+ * Right-side element of the splitter.
+*/
+
+#RightPane {
+	padding: 2px;
+	overflow: auto;
+}
+.ui-tabs-nav li {position: relative;}
+.ui-tabs-selected a span {padding-right: 10px;}
+.ui-tabs-close {display: none;position: absolute;top: 3px;right: 0px;z-index: 800;width: 16px;height: 14px;font-size: 10px; font-style: normal;cursor: pointer;}
+.ui-tabs-selected .ui-tabs-close {display: block;}
+.ui-layout-west .ui-jqgrid tr.jqgrow td { border-bottom: 0px none;}
+.ui-datepicker {z-index:1200;}
+.rotate
+    {
+        /* for Safari */
+        -webkit-transform: rotate(-90deg);
+
+        /* for Firefox */
+        -moz-transform: rotate(-90deg);
+
+        /* for Internet Explorer */
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    }
+
+</style>
+<script src="{{ STATIC_URL }}js/jquery-1.7.2.min.js" type="text/javascript"></script>
+<script src="{{ STATIC_URL }}js/i18n/grid.locale-tw.js" type="text/javascript"></script>
+<script src="{{ STATIC_URL }}js/jquery.jqGrid.min.js" type="text/javascript"></script>
+<script src="{{ STATIC_URL }}js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script>
+<table id="list"></table> 
+<div id="pager"></div> 
+<p>Date: <input type="text" id="datepicker" /></p>
+ 
+<script type="text/javascript">
+$(function() {
+    $( "#datepicker" ).datepicker();
+  });
+function pickdates(id){
+	jQuery("#"+id+"_F_Date","#list").datepicker({dateFormat:"yy-mm-dd"});
+}
+var lastsel;
+function handle_selected(id){
+	if(id && id!==lastsel){
+		jQuery('#list').jqGrid('restoreRow',lastsel);
+		jQuery('#list').jqGrid('editRow',id,true,pickdates);
+		lastsel=id;
+	}
+}
+
+jQuery("#list").jqGrid({
+	rowList: [10, 25, 50, 100], 
+	sortname: "id",
+	viewrecords: true, 
+	autowidth: true, 
+	shrinkToFit: true, 
+	height: "auto", 
+	gridview: true, 
+	sortorder: "asc", 
+	rowNum: 10, 
+	pager: "#pager", 
+	jsonReader: {repeatitems: false}, 
+	altRows: true, 
+	caption: "Stock Order Test", 
+	datatype: "json", 
+	forcefit: true, 
+	url: "/stock_order_order_handler/", 
+	onSelectRow: handle_selected,
+	colModel: [{index: "id", name: "id", editable: false, label: "id"},
+				 {index: "F_Date", sorttype: "date", name: "F_Date", searchrules: "{required:true,date:true}", editable: true, label: "\u4ea4\u6613\u65e5\u671f", }, 
+	             {index: "F_SKID", name: "F_SKID", editable: true, label: "\u57fa\u91d1\u4ee3\u865f"}, 
+				 {index: "F_TSType", name: "F_TSType", "edittype": "select", editable: true, label: "\u4ea4\u6613\u578b\u614b", editoptions: {value: {"1": "\u7533\u8cfc", "3": "\u9664\u6b0a", "2": "\u8d16\u56de", "4": "\u914d\u606f"}}}, 
+				 {index: "F_Date", name: "F_CurID", editable: true, label: "\u5e63\u5225"}, 
+				 {index: "F_Date", name: "F_Amt", editable: true, label: "\u4ea4\u6613\u91d1\u984d"}, 
+				 {index: "F_Date", name: "F_Qty", editable: false, label: "\u55ae\u4f4d\u6578"}, 
+				 {index: "F_Date", name: "F_Rate", editable: false, label: "\u532f\u7387"}, 
+				 {index: "F_Date", name: "F_Nav", editable: false, label: "\u6de8\u503c"}, 
+				 {index: "F_Date", name: "F_Fee", editable: false, label: "\u624b\u7e8c\u8cbb"}, 
+				 {index: "F_Date", name: "F_Exp", editable: false, label: "\u5176\u4ed6\u8cbb\u7528"}, 
+				 {index: "F_Date", name: "F_Status", editable: false, label: "\u7d50\u5e33\u72c0\u614b"}, 
+				 {index: "F_Date", name: "F_Cost", editable: false, label: "\u6210\u672c"}, 
+				 {index: "F_Date", name: "F_Net", editable: false, label: "\u640d\u76ca"}, 
+				 {index: "F_Date", name: "F_SettleDate", editable: false, label: "\u7d50\u5e33\u65e5\u671f"}, 
+				 {index: "F_Date", name: "F_Payable", editable: false, label: "\u61c9\u4ed8\u91d1\u984d"}, 
+				 {index: "F_Date", name: "F_Receivable", editable: false, label: "\u61c9\u6536\u91d1\u984d"}, 
+				 {index: "F_Note", name: "F_Note", editable: true, label: "\u5099\u8a3b"}],
+});
+
+$.ajaxSetup({ 
+    beforeSend: function(xhr, settings) {
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+        }
+        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+            // Only send the token to relative URLs i.e. locally.
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        }
+    } 
+});
+
+
+
+</script>

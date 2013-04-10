@@ -1,0 +1,34 @@
+{% include "js/grid_script.html" %}
+
+<script type="text/javascript">
+function showudate(tmpob)  
+{  
+$(function() {  
+        tmpob.datepicker({  
+            changeMonth: true,  
+            changeYear: true,  
+            dateFormat: "yy-mm-dd"  
+              
+        });  
+    });  
+};
+
+$(function() {
+    $.getJSON("{% url fundfund_clean_transaction_config %}", function(data){
+        $("#list")
+            .jqGrid(data)
+            .navGrid('#pager', 
+            	{add: true, edit: true, del: true, view: true},
+                {url: "{% url fundfund_clean_transaction_handler %}" }, // edit options
+        		{url: "{% url fundfund_clean_transaction_handler %}"}, // add options
+        		{url: "{% url fundfund_clean_transaction_handler %}"}, // del options 
+        		{ afterShowForm:function(formid){showudate($("#F_Date","#tr_F_Date"));}},
+        		{ multipleSearch:true, closeOnEscape:true }, // search options 
+        		{ jqModal:true, closeOnEscape:true} // view options 
+        );
+    });
+});
+</script>
+
+<table id="list"></table> 
+<div id="pager"></div> 

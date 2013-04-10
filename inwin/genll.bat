@@ -1,0 +1,1 @@
+python D:\Python27\Lib\site-packages\django\bin\django-admin.py makemessages --locale=zh_TW

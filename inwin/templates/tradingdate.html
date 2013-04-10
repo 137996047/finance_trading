@@ -1,0 +1,48 @@
+{% include "js/grid_script.html" %}
+
+<script type="text/javascript">
+function showudate(tmpob)  
+{  
+$(function() {  
+        tmpob.datepicker({  
+            changeMonth: true,  
+            changeYear: true,  
+            dateFormat: "yy-mm-dd"  
+              
+        });  
+    });  
+};
+
+$(function() {
+    $.getJSON("{% url tradingdate_config %}", function(data){
+        $("#tradingdate_table")
+            .jqGrid(data)
+            .navGrid('#pager', 
+            	{add: false, edit: true, del: false, view: true},
+                {url: "{% url tradingdate_handler %}" }, // edit options
+        		{url: "{% url tradingdate_handler %}"}, // add options
+        		{url: "{% url tradingdate_handler %}"}, // del options 
+        		{ multipleSearch:false, closeOnEscape:true }, // search options 
+        		{ jqModal:true, closeOnEscape:true} // view options 
+        );
+    });
+});
+
+jQuery(window).load(function(){
+$("#tradingdate_table").append("<input type='button' value='Set Trading Date' style='height:20px;font-size:-3'/>");
+$("input","#tradingdate_table").click(function(){
+	var id = jQuery("#tradingdate_table").jqGrid('getGridParam','selrow');
+	if (id)	{
+	var ret = jQuery("#tradingdate_table").jqGrid('getRowData',id);
+	alert("Trading Date="+ret.tDate+" Settled="+ret.Settled+"...");
+	} else { alert("Please select row");}
+});
+}
+);
+</script>
+
+<table id="tradingdate_table"></table> 
+<div id="pager"></div> 
+
+  
+      
