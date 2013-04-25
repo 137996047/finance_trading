@@ -17,7 +17,7 @@ from django.core.urlresolvers import reverse_lazy
 TSTYPE_CHOICES = { 'value':{'1': _('purchase'),'2': _('withdraw'),'3': _('dividend'),'4': _('interest')}}
 Date_picker = { 'dataInit':'pickdates' }
 
-def stock_order_api(request):
+def fund_order_api(request):
     logging.debug(get_request_info(request))
     message="success"
     if request.method == 'POST':

@@ -10,7 +10,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    
+    (r'^accounts/', include('allauth.urls')),
     url(r'%s' % settings.INWIN_URL, include('inwin.urls')),
     #url(r'^accounts/', include('django.contrib.auth.urls')),
     #url(r'^accounts/', include('registration.backends.default.urls')),
@@ -22,7 +22,7 @@ urlpatterns = patterns('',
     #(r'^settings/', include('askbot.deps.livesettings.urls')),
     #(r'^followit/', include('followit.urls')),
     #(r'^robots.txt$', include('robots.urls')),
-    (r'^accounts/', include('allauth.urls')),
+    
     url( # TODO: replace with django.conf.urls.static ?
         r'^%s(?P<path>.*)$' % settings.MEDIA_URL[1:], 
         'django.views.static.serve',

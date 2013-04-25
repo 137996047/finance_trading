@@ -12028,3 +12028,262 @@ Traceback (most recent call last):
   File "D:\Python27\Lib\site-packages\django\db\models\sql\query.py", line 1316, in setup_joins
     "Choices are: %s" % (name, ", ".join(names)))
 FieldError: Cannot resolve keyword u'id' into field. Choices are: CN, HK, Opened, Settled, TW, US, tDate
+D:\Python27\Lib\site-packages\django\core\handlers\base.py TIME: 2013-04-24 18:27:04,905 MSG: base.py:handle_uncaught_exception:215 Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\Python27\Lib\site-packages\django\core\handlers\base.py", line 89, in get_response
+    response = middleware_method(request)
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\middleware\toolbar.py", line 33, in process_request
+    request.toolbar = CMSToolbar(request)
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\cms_toolbar.py", line 63, in __init__
+    self.init()
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\cms_toolbar.py", line 67, in init
+    self.can_change = (self.request.current_page and
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\middleware\page.py", line 8, in __get__
+    request._current_page_cache = get_page_from_request(request)
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\utils\page_resolver.py", line 115, in get_page_from_request
+    pages_root = urllib.unquote(reverse("pages-root"))
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\models\__init__.py", line 54, in new_reverse
+    url = django.core.urlresolvers.old_reverse(viewname, urlconf=urlconf, args=args, kwargs=kwargs, prefix=prefix, current_app=current_app)
+  File "D:\Python27\Lib\site-packages\django\core\urlresolvers.py", line 476, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "D:\Python27\Lib\site-packages\django\core\urlresolvers.py", line 363, in _reverse_with_prefix
+    possibilities = self.reverse_dict.getlist(lookup_view)
+  File "D:\Python27\Lib\site-packages\django\core\urlresolvers.py", line 276, in reverse_dict
+    self._populate()
+  File "D:\Python27\Lib\site-packages\django\core\urlresolvers.py", line 242, in _populate
+    for pattern in reversed(self.url_patterns):
+  File "D:\Python27\Lib\site-packages\django\core\urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "D:\Python27\Lib\site-packages\django\core\urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "D:\Python27\Lib\site-packages\django\utils\importlib.py", line 35, in import_module
+    __import__(name)
+  File "C:\Develop\finance_trading\finance_trading\urls.py", line 14, in <module>
+    url(r'%s' % settings.INWIN_URL, include('inwin.urls')),
+  File "D:\Python27\Lib\site-packages\django\conf\urls\__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "D:\Python27\Lib\site-packages\django\utils\importlib.py", line 35, in import_module
+    __import__(name)
+  File "C:\Develop\finance_trading\inwin\urls.py", line 6, in <module>
+    import inwin.fund.urls
+  File "C:\Develop\finance_trading\inwin\fund\urls.py", line 25, in <module>
+    url(r'^order_api/$',                  orders.fund_order_api, name='fund_order_api'),
+AttributeError: 'module' object has no attribute 'fund_order_api'
+D:\Python27\Lib\site-packages\django\core\handlers\base.py TIME: 2013-04-24 18:27:06,351 MSG: base.py:handle_uncaught_exception:215 Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "D:\Python27\Lib\site-packages\django\core\handlers\base.py", line 89, in get_response
+    response = middleware_method(request)
+  File "D:\Python27\Lib\site-packages\django\middleware\common.py", line 67, in process_request
+    if (not urlresolvers.is_valid_path(request.path_info, urlconf) and
+  File "D:\Python27\Lib\site-packages\django\core\urlresolvers.py", line 531, in is_valid_path
+    resolve(path, urlconf)
+  File "D:\Python27\Lib\site-packages\django\core\urlresolvers.py", line 420, in resolve
+    return get_resolver(urlconf).resolve(path)
+  File "D:\Python27\Lib\site-packages\django\core\urlresolvers.py", line 298, in resolve
+    for pattern in self.url_patterns:
+  File "D:\Python27\Lib\site-packages\django\core\urlresolvers.py", line 328, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "D:\Python27\Lib\site-packages\django\core\urlresolvers.py", line 323, in urlconf_module
+    self._urlconf_module = import_module(self.urlconf_name)
+  File "D:\Python27\Lib\site-packages\django\utils\importlib.py", line 35, in import_module
+    __import__(name)
+  File "C:\Develop\finance_trading\finance_trading\urls.py", line 14, in <module>
+    url(r'%s' % settings.INWIN_URL, include('inwin.urls')),
+  File "D:\Python27\Lib\site-packages\django\conf\urls\__init__.py", line 24, in include
+    urlconf_module = import_module(urlconf_module)
+  File "D:\Python27\Lib\site-packages\django\utils\importlib.py", line 35, in import_module
+    __import__(name)
+  File "C:\Develop\finance_trading\inwin\urls.py", line 6, in <module>
+    import inwin.fund.urls
+  File "C:\Develop\finance_trading\inwin\fund\urls.py", line 25, in <module>
+    url(r'^order_api/$',                  orders.fund_order_api, name='fund_order_api'),
+AttributeError: 'module' object has no attribute 'fund_order_api'
+D:\Python27\Lib\site-packages\django\core\handlers\base.py TIME: 2013-04-24 23:12:31,392 MSG: base.py:handle_uncaught_exception:215 Internal Server Error: /accounts/login/
+Traceback (most recent call last):
+  File "D:\Python27\Lib\site-packages\django\core\handlers\base.py", line 136, in get_response
+    response = response.render()
+  File "D:\Python27\Lib\site-packages\django\template\response.py", line 104, in render
+    self._set_content(self.rendered_content)
+  File "D:\Python27\Lib\site-packages\django\template\response.py", line 81, in rendered_content
+    content = template.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 140, in render
+    return self._render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\Lib\site-packages\django\template\debug.py", line 74, in render_node
+    return node.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\loader_tags.py", line 101, in render
+    compiled_parent = self.get_parent(context)
+  File "D:\Python27\Lib\site-packages\django\template\loader_tags.py", line 98, in get_parent
+    return get_template(parent)
+  File "D:\Python27\Lib\site-packages\django\template\loader.py", line 145, in get_template
+    template, origin = find_template(template_name)
+  File "D:\Python27\Lib\site-packages\django\template\loader.py", line 134, in find_template
+    source, display_name = loader(name, dirs)
+  File "D:\Python27\Lib\site-packages\django\template\loader.py", line 42, in __call__
+    return self.load_template(template_name, template_dirs)
+  File "D:\Python27\Lib\site-packages\django\template\loader.py", line 45, in load_template
+    source, display_name = self.load_template_source(template_name, template_dirs)
+  File "D:\Python27\Lib\site-packages\django\template\loaders\app_directories.py", line 57, in load_template_source
+    return (file.read().decode(settings.FILE_CHARSET), filepath)
+  File "D:\Python27\Lib\encodings\utf_8.py", line 16, in decode
+    return codecs.utf_8_decode(input, errors, True)
+UnicodeDecodeError: 'utf8' codec can't decode byte 0xb0 in position 854: invalid start byte
+D:\Python27\Lib\site-packages\django\core\handlers\base.py TIME: 2013-04-24 23:12:44,411 MSG: base.py:handle_uncaught_exception:215 Internal Server Error: /accounts/login/
+Traceback (most recent call last):
+  File "D:\Python27\Lib\site-packages\django\core\handlers\base.py", line 136, in get_response
+    response = response.render()
+  File "D:\Python27\Lib\site-packages\django\template\response.py", line 104, in render
+    self._set_content(self.rendered_content)
+  File "D:\Python27\Lib\site-packages\django\template\response.py", line 81, in rendered_content
+    content = template.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 140, in render
+    return self._render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\Lib\site-packages\django\template\debug.py", line 74, in render_node
+    return node.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\Lib\site-packages\django\template\debug.py", line 74, in render_node
+    return node.render(context)
+  File "D:\Python27\lib\site-packages\django_classy_tags-0.4-py2.7.egg\classytags\core.py", line 106, in render
+    return self.render_tag(context, **kwargs)
+  File "D:\Python27\lib\site-packages\django_sekizai-0.7-py2.7.egg\sekizai\templatetags\sekizai_tags.py", line 76, in render_tag
+    rendered_contents = nodelist.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\Lib\site-packages\django\template\debug.py", line 74, in render_node
+    return node.render(context)
+  File "D:\Python27\lib\site-packages\django_classy_tags-0.4-py2.7.egg\classytags\core.py", line 106, in render
+    return self.render_tag(context, **kwargs)
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\templatetags\cms_tags.py", line 232, in render_tag
+    return nodelist.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\Lib\site-packages\django\template\debug.py", line 74, in render_node
+    return node.render(context)
+  File "D:\Python27\lib\site-packages\django_classy_tags-0.4-py2.7.egg\classytags\core.py", line 106, in render
+    return self.render_tag(context, **kwargs)
+  File "D:\Python27\lib\site-packages\django_classy_tags-0.4-py2.7.egg\classytags\helpers.py", line 75, in render_tag
+    data = self.get_context(context, **kwargs)
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\templatetags\cms_tags.py", line 393, in get_context
+    return _show_placeholder_for_page(**self.get_kwargs(*args, **kwargs))
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\templatetags\cms_tags.py", line 364, in _show_placeholder_for_page
+    page = _get_page_by_untyped_arg(page_lookup, request, site_id)
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\templatetags\cms_tags.py", line 85, in _get_page_by_untyped_arg
+    raise Page.DoesNotExist(body)
+DoesNotExist: A template tag couldn't find the page with lookup arguments `{'reverse_id': '', 'site': 1}
+`. The URL of the request was: http://ec.moneydj.com/accounts/login/
+D:\Python27\Lib\site-packages\django\core\handlers\base.py TIME: 2013-04-24 23:14:16,299 MSG: base.py:handle_uncaught_exception:215 Internal Server Error: /accounts/login/
+Traceback (most recent call last):
+  File "D:\Python27\Lib\site-packages\django\core\handlers\base.py", line 136, in get_response
+    response = response.render()
+  File "D:\Python27\Lib\site-packages\django\template\response.py", line 104, in render
+    self._set_content(self.rendered_content)
+  File "D:\Python27\Lib\site-packages\django\template\response.py", line 81, in rendered_content
+    content = template.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 140, in render
+    return self._render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\Lib\site-packages\django\template\debug.py", line 74, in render_node
+    return node.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\Lib\site-packages\django\template\debug.py", line 74, in render_node
+    return node.render(context)
+  File "D:\Python27\lib\site-packages\django_classy_tags-0.4-py2.7.egg\classytags\core.py", line 106, in render
+    return self.render_tag(context, **kwargs)
+  File "D:\Python27\lib\site-packages\django_sekizai-0.7-py2.7.egg\sekizai\templatetags\sekizai_tags.py", line 76, in render_tag
+    rendered_contents = nodelist.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\Lib\site-packages\django\template\debug.py", line 74, in render_node
+    return node.render(context)
+  File "D:\Python27\lib\site-packages\django_classy_tags-0.4-py2.7.egg\classytags\core.py", line 106, in render
+    return self.render_tag(context, **kwargs)
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\templatetags\cms_tags.py", line 232, in render_tag
+    return nodelist.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\Lib\site-packages\django\template\debug.py", line 74, in render_node
+    return node.render(context)
+  File "D:\Python27\lib\site-packages\django_classy_tags-0.4-py2.7.egg\classytags\core.py", line 106, in render
+    return self.render_tag(context, **kwargs)
+  File "D:\Python27\lib\site-packages\django_classy_tags-0.4-py2.7.egg\classytags\helpers.py", line 75, in render_tag
+    data = self.get_context(context, **kwargs)
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\templatetags\cms_tags.py", line 393, in get_context
+    return _show_placeholder_for_page(**self.get_kwargs(*args, **kwargs))
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\templatetags\cms_tags.py", line 364, in _show_placeholder_for_page
+    page = _get_page_by_untyped_arg(page_lookup, request, site_id)
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\templatetags\cms_tags.py", line 85, in _get_page_by_untyped_arg
+    raise Page.DoesNotExist(body)
+DoesNotExist: A template tag couldn't find the page with lookup arguments `{'reverse_id': '', 'site': 1}
+`. The URL of the request was: http://ec.moneydj.com/accounts/login/
+D:\Python27\Lib\site-packages\django\core\handlers\base.py TIME: 2013-04-24 23:14:39,365 MSG: base.py:handle_uncaught_exception:215 Internal Server Error: /accounts/login/
+Traceback (most recent call last):
+  File "D:\Python27\Lib\site-packages\django\core\handlers\base.py", line 136, in get_response
+    response = response.render()
+  File "D:\Python27\Lib\site-packages\django\template\response.py", line 104, in render
+    self._set_content(self.rendered_content)
+  File "D:\Python27\Lib\site-packages\django\template\response.py", line 81, in rendered_content
+    content = template.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 140, in render
+    return self._render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\Lib\site-packages\django\template\debug.py", line 74, in render_node
+    return node.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\loader_tags.py", line 123, in render
+    return compiled_parent._render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 134, in _render
+    return self.nodelist.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\Lib\site-packages\django\template\debug.py", line 74, in render_node
+    return node.render(context)
+  File "D:\Python27\lib\site-packages\django_classy_tags-0.4-py2.7.egg\classytags\core.py", line 106, in render
+    return self.render_tag(context, **kwargs)
+  File "D:\Python27\lib\site-packages\django_sekizai-0.7-py2.7.egg\sekizai\templatetags\sekizai_tags.py", line 76, in render_tag
+    rendered_contents = nodelist.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\Lib\site-packages\django\template\debug.py", line 74, in render_node
+    return node.render(context)
+  File "D:\Python27\lib\site-packages\django_classy_tags-0.4-py2.7.egg\classytags\core.py", line 106, in render
+    return self.render_tag(context, **kwargs)
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\templatetags\cms_tags.py", line 232, in render_tag
+    return nodelist.render(context)
+  File "D:\Python27\Lib\site-packages\django\template\base.py", line 823, in render
+    bit = self.render_node(node, context)
+  File "D:\Python27\Lib\site-packages\django\template\debug.py", line 74, in render_node
+    return node.render(context)
+  File "D:\Python27\lib\site-packages\django_classy_tags-0.4-py2.7.egg\classytags\core.py", line 106, in render
+    return self.render_tag(context, **kwargs)
+  File "D:\Python27\lib\site-packages\django_classy_tags-0.4-py2.7.egg\classytags\helpers.py", line 75, in render_tag
+    data = self.get_context(context, **kwargs)
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\templatetags\cms_tags.py", line 393, in get_context
+    return _show_placeholder_for_page(**self.get_kwargs(*args, **kwargs))
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\templatetags\cms_tags.py", line 364, in _show_placeholder_for_page
+    page = _get_page_by_untyped_arg(page_lookup, request, site_id)
+  File "D:\Python27\lib\site-packages\django_cms-2.3.5-py2.7.egg\cms\templatetags\cms_tags.py", line 85, in _get_page_by_untyped_arg
+    raise Page.DoesNotExist(body)
+DoesNotExist: A template tag couldn't find the page with lookup arguments `{'reverse_id': '', 'site': 1}
+`. The URL of the request was: http://ec.moneydj.com/accounts/login/
