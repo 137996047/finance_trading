@@ -164,3 +164,51 @@ class fundnav(models.Model):
         db_table = u'fundnav'
         verbose_name = _('fundnav')
         verbose_name_plural = _('fundnav')
+        
+class fundscaleManager(models.Manager):
+    def Insert(self,Symbol,tDate,Scale):
+        try:
+            try:
+                symbolobject=fundsymbol.objects.GetbySymbol(Symbol)
+            except:
+                logging.debug('Can''t find fund by symbol: %s' % ','.join(Symbol))
+                return
+            if symbolobject==None:
+                logging.debug('Can''t find fund by symbol: %s' % ','.join(Symbol))
+                return
+            ScaleTick=fundscale.objects.get(Symbol=symbolobject,tDate=tDate)
+            if ScaleTick==None:
+                ScaleTick=fundscale(Symbol=symbolobject,tDate=tDate,Scale=Scale)
+            else:
+                ScaleTick.Symbol=Symbol
+                ScaleTick.tDate=tDate
+                ScaleTick.Scale=Scale
+            ScaleTick.save()
+        except:
+            ScaleTick=fundscale(Symbol=symbolobject,tDate=tDate,Scale=Scale)
+            ScaleTick.save()
+    def Get(self,Symbol,beginDate,endDate):
+        return fundscale.objects.filter(Symbol=Symbol,tDate__gte=beginDate,tDate__lte=endDate)
+
+        
+
+class fundscale(models.Model):
+    """
+    The DB to store the fund Close price
+    """
+    Symbol = models.ForeignKey(fundsymbol, null=True, blank=True)
+    tDate = models.DateField(default=datetime.date.today(),verbose_name=_('Trans_Date'))
+    Scale=models.BigIntegerField(default=0,verbose_name=_('Scale'))
+    CUR = models.CharField(max_length=20,verbose_name=_('Currency'))
+    Scale_NTD = models.BigIntegerField(default=0,verbose_name=_('NTD Scale'))
+    objects = fundscaleManager()
+
+
+    def __unicode__(self):
+        return u'Symbol:%s Scale:%s' % (self.Symbol,self.scale)
+
+    class Meta:
+        app_label = 'data'
+        db_table = u'fundscale'
+        verbose_name = _('fundscale')
+        verbose_name_plural = _('fundscale')

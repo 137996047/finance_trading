@@ -346,3 +346,7 @@ msgstr "股票交易查詢"
 #: .\stock\plugins\orderquery.py:55
 msgid "Stock Order Portfolio"
 msgstr "股票庫存查詢"
+
+#: .\data\views\tradingdate.py:55
+msgid "Trading Date Config"
+msgstr "交易日期設定"

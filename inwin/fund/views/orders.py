@@ -17,6 +17,50 @@ from django.core.urlresolvers import reverse_lazy
 TSTYPE_CHOICES = { 'value':{'1': _('purchase'),'2': _('withdraw'),'3': _('dividend'),'4': _('interest')}}
 Date_picker = { 'dataInit':'pickdates' }
 
+def fund_info_api(request):
+    logging.debug(get_request_info(request))
+    message="success"
+    if request.method == 'POST':
+        placeorderform = orderform(request.POST)
+        #if orderform.is_valid() :
+        if placeorderform.is_valid():
+                F_SKID= placeorderform.data['F_SKID']
+                F_TSType= placeorderform.data['F_TSType']
+                F_Qty= placeorderform.data['F_Qty']
+                F_Amount= placeorderform.data['F_Amount']
+                F_Date= placeorderform.data['F_Date']
+        F_SKID= placeorderform.data['F_SKID']
+        F_TSType= placeorderform.data['F_TSType']
+        F_Qty= placeorderform.data['F_Qty']
+        F_Amount= placeorderform.data['F_Amount']
+        F_Date= placeorderform.data['F_Date']  
+        if stocksymbol.objects.CheckSymbol(symbol=F_SKID, market=F_Market):
+            placeorder.objects.placeorder(F_SKID,F_TSType,F_Qty,F_Price,F_Market,F_OrderType,F_Date,F_CurID,request.user)  
+        else:
+            message="Symbol Error!"
+    else:
+        pass
+    
+    return HttpResponse(message, mimetype="application/json")
+
+def info_view(request):
+    logging.debug(get_request_info(request))
+    if request.method == 'POST':
+        placeorderform = orderform(request.POST)
+        #if orderform.is_valid() :
+                
+
+    else:
+        placeorderform = orderform()
+
+    data = {
+        'orderform': placeorderform,
+    }
+    #template=get_template('fund_trading.html')
+    
+    #return render(request, 'fund_trading.html', data)
+    return render_to_response('fund_trading.html', data, context_instance=RequestContext(request))
+
 def fund_order_api(request):
     logging.debug(get_request_info(request))
     message="success"

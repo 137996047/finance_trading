@@ -7,21 +7,33 @@ from django.db import models
 from django.utils.translation import ugettext as _
 import datetime
 import logging
+import sys
 #import feedparser
 #import sys
 #import time
 #from time import mktime 
+from django.conf import settings
 from django.db.models import Min
+from django.utils import simplejson
+from inwin import app_settings
 
 class tradingdateManager(models.Manager):
     def getCurrentDate(self,market):
         if market=='HK':
             today=datetime.date.today()
             try:
-                currenttradingdate=tradingdate.objects.filter(HK='Y').filter(tDate__gte=today).aggregate(Min('tDate'))
+                currenttradingdate=tradingdate.objects.filter(HK='Y').filter(Matched=False).filter(tDate__gte=today).aggregate(Min('tDate'))
                 return currenttradingdate['tDate__min']
             except:
                 return today
+        elif market=='TW':
+            today=datetime.date.today()
+            try:
+                currenttradingdate=tradingdate.objects.filter(TW='Y').filter(Matched=False).filter(tDate__gte=today).aggregate(Min('tDate'))
+                return currenttradingdate['tDate__min']
+            except:
+                return today
+       
     def initial(self):
         for d in range(1000):
             try:
@@ -43,6 +55,7 @@ class tradingdate(models.Model):
     TW = models.CharField(max_length=1,default='Y',verbose_name=_('TW Exchange'))
     CN = models.CharField(max_length=1,default='Y',verbose_name=_('CN Exchange'))
     Opened = models.BooleanField(default=False,verbose_name=_('Market Open'))
+    Matched = models.BooleanField(default=False,verbose_name=_('Is Matched'))
     Settled = models.BooleanField(default=False,verbose_name=_('Is Settled'))
     objects = tradingdateManager()
     class Meta:
@@ -50,6 +63,169 @@ class tradingdate(models.Model):
         db_table = u'tradingdate'
         verbose_name = _('trading date')
         verbose_name_plural = _('trading date')
+        
+class tradingparameterManager(models.Manager):
+    def getTradingParameter(self):
+        try:
+            return tradingparameter.objects.all()[0]
+        except:
+            return None;
+    def getTradingDate(self,market):
+        try:
+            currenttradingdate=tradingparameter.objects.all()[0]
+            today=datetime.date.today()
+            if currenttradingdate==None:
+                if market=='TW':
+                    return self.setTradingDate(today,'TW')
+                elif market=='HK':
+                    return self.setTradingDate(today,'HK')
+                elif market=='US':
+                    return self.setTradingDate(today,'US')
+                elif market=='CN':
+                    return self.setTradingDate(today,'CN')
+            else: 
+                if market=='TW':
+                    return currenttradingdate.TW_TradingDate
+                elif market=='HK':
+                    return currenttradingdate.HK_TradingDate
+                elif market=='US':
+                    return currenttradingdate.US_TradingDate
+                elif market=='CN':
+                    return currenttradingdate.CN_TradingDate
+        except:
+            return None;
+    def getFeeRate(self,market):
+        try:
+            currenttradingparametar=tradingparameter.objects.all()[0]
+            if currenttradingparametar==None:
+                currenttradingparametar=self.setDefault()
+            if market=='TW':
+                return currenttradingparametar.TW_FeeRate
+            elif market=='HK':
+                return currenttradingparametar.HK_FeeRate
+            elif market=='US':
+                return currenttradingparametar.US_FeeRate
+            elif market=='CN':
+                return currenttradingparametar.CN_FeeRate
+        except:
+            logging.debug('getFeeRate: %s %s Error:%s' % ','.join(market,unicode(sys.exc_info()[0])))
+            return None
+    def getTaxRate(self,market):
+        try:
+            currenttradingparametar=tradingparameter.objects.all()[0]
+            if currenttradingparametar==None:
+                currenttradingparametar=self.setDefault()
+            if market=='TW':
+                return currenttradingparametar.TW_TaxRate
+            elif market=='HK':
+                return currenttradingparametar.HK_TaxRate
+            elif market=='US':
+                return currenttradingparametar.US_TaxRate
+            elif market=='CN':
+                return currenttradingparametar.CN_TaxRate
+        except:
+            logging.debug('getFeeRate: %s Error:%s' % ','.join(market,unicode(sys.exc_info()[0])))
+            return None
+    def setFeeRate(self,market,feerate):
+        try:
+            currenttradingparametar=tradingparameter.objects.all()[0]
+            if currenttradingparametar==None:
+                currenttradingparametar=self.setDefault()
+            if market=='TW':
+                currenttradingparametar.TW_FeeRate=feerate
+            elif market=='HK':
+                currenttradingparametar.HK_FeeRate=feerate
+            elif market=='US':
+                currenttradingparametar.US_FeeRate=feerate
+            elif market=='CN':
+                currenttradingparametar.CN_FeeRate=feerate
+        except:
+            logging.debug('getFeeRate: %s %s Error:%s' % ','.join(market,unicode(feerate),unicode(sys.exc_info()[0])))
+            return None
+    def setTaxRate(self,market,taxrate):
+        try:
+            currenttradingparametar=tradingparameter.objects.all()[0]
+            if currenttradingparametar==None:
+                currenttradingparametar=self.setDefault()
+            if market=='TW':
+                currenttradingparametar.TW_TaxRate=taxrate
+            elif market=='HK':
+                currenttradingparametar.HK_TaxRate=taxrate
+            elif market=='US':
+                currenttradingparametar.US_TaxRate=taxrate
+            elif market=='CN':
+                currenttradingparametar.CN_TaxRate=taxrate
+        except:
+            logging.debug('getFeeRate: %s %s Error:%s' % ','.join(market,unicode(taxrate),unicode(sys.exc_info()[0])))
+            return None
+    def setTradingDate(self,f_date,market):
+        try:
+            currenttradingparametar=tradingparameter.objects.all()[0]
+            if currenttradingparametar==None:
+                currenttradingparametar=self.setDefault()
+
+            if market=='TW':
+                currenttradingparametar.TW_TradingDate=f_date
+            elif market=='HK':
+                currenttradingparametar.HK_TradingDate=f_date
+            elif market=='US':
+                currenttradingparametar.US_TradingDate=f_date
+            elif market=='CN':
+                currenttradingparametar.CN_TradingDate=f_date 
+        except:
+            logging.debug('setTradingDate: %s %s Error:%s' % ','.join(unicode(f_date),market,unicode(sys.exc_info()[0])))
+            return None
+        currenttradingparametar.save()
+        return f_date
+    def setDefault(self):
+        try:
+            currenttradingparametar=tradingparameter.objects.all()[0]
+            today=datetime.date.today()
+            if currenttradingparametar==None:
+                currenttradingparametar=tradingparameter.objects.create(TW_TradingDate=today,HK_TradingDate=today,US_TradingDate=today,CN_TradingDate=today,
+                                                                   TW_FeeRate=app_settings.TW_FEERATE,HK_FeeRate=app_settings.HK_FEERATE,US_FeeRate=app_settings.US_FEERATE,CN_FeeRate=app_settings.CN_FEERATE,
+                                                                   TW_TaxRate=app_settings.TW_TAXRATE,HK_TaxRate=app_settings.HK_TAXRATE,US_TaxRate=app_settings.US_TAXRATE,CN_TaxRate=app_settings.CN_TAXRATE)
+            else:
+                currenttradingparametar.TW_TradingDate=today
+                currenttradingparametar.HK_TradingDate=today
+                currenttradingparametar.US_TradingDate=today
+                currenttradingparametar.CN_TradingDate=today
+                currenttradingparametar.TW_FeeRate=app_settings.TW_FEERATE
+                currenttradingparametar.HK_FeeRate=app_settings.HK_FEERATE
+                currenttradingparametar.US_FeeRate=app_settings.US_FEERATE
+                currenttradingparametar.CN_FeeRate=app_settings.CN_FEERATE
+                currenttradingparametar.TW_TaxRate=app_settings.TW_TAXRATE
+                currenttradingparametar.HK_TaxRate=app_settings.HK_TAXRATE
+                currenttradingparametar.US_TaxRate=app_settings.US_TAXRATE
+                currenttradingparametar.CN_TaxRate=app_settings.CN_TAXRATE
+            currenttradingparametar.save()
+            return currenttradingparametar
+        except:
+            logging.debug(' setDefault Error:%s' % ','.join(unicode(sys.exc_info()[0])))
+            return None
+class tradingparameter(models.Model):
+    HK_TradingDate = models.DateField(default=datetime.date.today(),verbose_name=_('HK_Trans_Date'))
+    US_TradingDate = models.DateField(default=datetime.date.today(),verbose_name=_('US_Trans_Date'))
+    TW_TradingDate = models.DateField(default=datetime.date.today(),verbose_name=_('TW_Trans_Date'))
+    CN_TradingDate = models.DateField(default=datetime.date.today(),verbose_name=_('CN_Trans_Date'))
+    HK_SettleDate = models.DateField(default=datetime.date.today(),verbose_name=_('HK_Trans_Date'))
+    US_SettleDate = models.DateField(default=datetime.date.today(),verbose_name=_('US_Trans_Date'))
+    TW_SettleDate = models.DateField(default=datetime.date.today(),verbose_name=_('TW_Trans_Date'))
+    CN_SettleDate = models.DateField(default=datetime.date.today(),verbose_name=_('CN_Trans_Date'))
+    HK_FeeRate = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True,verbose_name=_('HK_Fee_Rate'))
+    US_FeeRate = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True,verbose_name=_('US_Fee_Rate'))
+    TW_FeeRate = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True,verbose_name=_('TW_Fee_Rate'))
+    CN_FeeRate = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True,verbose_name=_('CN_Fee_Rate'))
+    HK_TaxRate = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True,verbose_name=_('HK_Tax_Rate'))
+    US_TaxRate = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True,verbose_name=_('US_Tax_Rate'))
+    TW_TaxRate = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True,verbose_name=_('TW_Tax_Rate'))
+    CN_TaxRate = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True,verbose_name=_('CN_Tax_Rate'))
+    objects = tradingparameterManager()
+    class Meta:
+        app_label = 'data'
+        db_table = u'tradingparameter'
+        verbose_name = _('trading parameter')
+        verbose_name_plural = _('trading parameter')
         
 class stocksymbolManager(models.Manager):
     def GetbySymbol(self,symbol):
@@ -157,11 +333,11 @@ class stockcloseManager(models.Manager):
             if symbolobject==None:
                 logging.debug('Can''t find stock by symbol: %s' % ','.join(Symbol))
                 return
-            CloseTick=stockclose.objects.get(Symbol=symbolobject,tDate=tDate)
+            CloseTick=stockclose.objects.get(stocksymbol=symbolobject,tDate=tDate)
             if CloseTick==None:
-                CloseTick=stockclose(Symbol=symbolobject,tDate=tDate,Open=Open,High=High,Low=Low,Close=Close,Volume=Volume)
+                CloseTick=stockclose(stocksymbol=symbolobject,tDate=tDate,Open=Open,High=High,Low=Low,Close=Close,Volume=Volume)
             else:
-                CloseTick.Symbol=Symbol
+                CloseTick.stocksymbol=symbolobject
                 CloseTick.tDate=tDate
                 CloseTick.Open=Open
                 CloseTick.High=High            
@@ -170,10 +346,22 @@ class stockcloseManager(models.Manager):
                 CloseTick.Volume=Volume
             CloseTick.save()
         except:
-            CloseTick=stockclose(Symbol=symbolobject,tDate=tDate,Open=Open,High=High,Low=Low,Close=Close,Volume=Volume)
+            CloseTick=stockclose(stocksymbol=symbolobject,tDate=tDate,Open=Open,High=High,Low=Low,Close=Close,Volume=Volume)
             CloseTick.save()
-    def Get(self,Symbol,beginDate,endDate):
-        return stockclose.objects.filter(Symbol=Symbol,tDate__gte=beginDate,tDate__lte=endDate)
+    def GetbySymbolKey(self,Symbol,beginDate,endDate):
+        try:
+                symbolobject=stocksymbol.objects.GetbySymbolKey(Symbol)
+        except:
+                logging.debug('Can''t find stock by symbol: %s' % ','.join(Symbol))
+                return None
+        return stockclose.objects.filter(Symbol=symbolobject,tDate__gte=beginDate,tDate__lte=endDate)
+    def GetbySymbol(self,Symbol,Market,beginDate,endDate):
+        try:
+                symbolobject=stocksymbol.objects.GetbySymbol(Symbol,Market)
+        except:
+                logging.debug('Can''t find stock by symbol: %s' % ','.join(Symbol))
+                return None
+        return stockclose.objects.filter(Symbol=symbolobject,tDate__gte=beginDate,tDate__lte=endDate)
 
         
 
@@ -181,7 +369,7 @@ class stockclose(models.Model):
     """
     The DB to store the Stock Close price
     """
-    Symbol = models.ForeignKey(stocksymbol, null=True, blank=True)
+    stocksymbol = models.ForeignKey(stocksymbol, null=True, blank=True)
     tDate = models.DateField(default=datetime.date.today(),verbose_name=_('Trans_Date'))
     Open=models.FloatField(default=0,verbose_name=_('Open'))
     High=models.FloatField(default=0,verbose_name=_('High'))
@@ -192,7 +380,7 @@ class stockclose(models.Model):
 
 
     def __unicode__(self):
-        return u'Symbol:%s' % (self.Symbol)
+        return u'StockSymbol:%s' % (self.stocksymbol)
 
     class Meta:
         app_label = 'data'
@@ -200,13 +388,7 @@ class stockclose(models.Model):
         verbose_name = _('stockclose')
         verbose_name_plural = _('stockclose')
     
-class stockclose_us(stockclose):
-    class Meta:
-        app_label = 'data'
-        db_table = u'stockclose_us'
-        verbose_name = _('stockclose_us')
-        verbose_name_plural = _('stockclose_us')
-        
+       
 class stockindustry(models.Model):
     """
     The DB to store the Stock Close proce

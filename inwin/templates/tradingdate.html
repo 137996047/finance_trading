@@ -27,20 +27,87 @@ $(function() {
         );
     });
 });
-
+var lastSel;
 jQuery(window).load(function(){
-$("#tradingdate_table").append("<input type='button' value='Set Trading Date' style='height:20px;font-size:-3'/>");
-$("input","#tradingdate_table").click(function(){
+$("#pickup_TWdate").click(function(){
 	var id = jQuery("#tradingdate_table").jqGrid('getGridParam','selrow');
 	if (id)	{
 	var ret = jQuery("#tradingdate_table").jqGrid('getRowData',id);
 	alert("Trading Date="+ret.tDate+" Settled="+ret.Settled+"...");
+	$.post("/data/tradingdate_setting/",{F_Date:ret.tDate,F_Market:'TW'},finish_tradingdate_setting,"json")
+	$("#TW_F_Date").text(ret.tDate);
+	} else { alert("Please select row");}
+});
+$("#pickup_HKdate").click(function(){
+	var id = jQuery("#tradingdate_table").jqGrid('getGridParam','selrow');
+	if (id)	{
+	var ret = jQuery("#tradingdate_table").jqGrid('getRowData',id);
+	alert("Trading Date="+ret.tDate+" Settled="+ret.Settled+"...");
+	$.post("/data/tradingdate_setting/",{F_Date:ret.tDate,F_Market:'HK'},finish_tradingdate_setting,"json")
+	$("#HK_F_Date").text(ret.tDate);
+	} else { alert("Please select row");}
+});
+$("#pickup_USdate").click(function(){
+	var id = jQuery("#tradingdate_table").jqGrid('getGridParam','selrow');
+	if (id)	{
+	var ret = jQuery("#tradingdate_table").jqGrid('getRowData',id);
+	alert("Trading Date="+ret.tDate+" Settled="+ret.Settled+"...");
+	$.post("/data/tradingdate_setting/",{F_Date:ret.tDate,F_Market:'US'},finish_tradingdate_setting,"json")
+	$("#US_F_Date").text(ret.tDate);
+	} else { alert("Please select row");}
+});
+$("#pickup_CNdate").click(function(){
+	var id = jQuery("#tradingdate_table").jqGrid('getGridParam','selrow');
+	if (id)	{
+	var ret = jQuery("#tradingdate_table").jqGrid('getRowData',id);
+	alert("Trading Date="+ret.tDate+" Settled="+ret.Settled+"...");
+	$.post("/data/tradingdate_setting/",{F_Date:ret.tDate,F_Market:'CN'},finish_tradingdate_setting,"json")
+	$("#CN_F_Date").text(ret.tDate);
 	} else { alert("Please select row");}
 });
 }
 );
+function finish_tradingdate_setting(data)
+{
+	if (data.success)
+	{
+		$("#"+data.id).remove()
+	}
+	else
+	{
+		alert(data.message);
+	}
+}
 </script>
-
+<H>目前設定的交易日期</H>
+<table>
+	<tr>
+		<td>
+			<P>
+				<label for="TW_Date_Label">台灣交易日期:</label>
+				<label ID="TW_F_Date">{{parameter.TW_TradingDate}}</label>
+			</P><input type='button' id='pickup_TWdate' value='Set TW Trading Date' style='height:20px;font-size:-3'/>
+		</td>
+		<td>
+			<P>
+				<label for="HK_Date_Label">香港交易日期:</label>
+				<label ID="HK_F_Date">{{parameter.HK_TradingDate}}</label>
+			</P><input type='button' id='pickup_HKdate' value='Set HK Trading Date' style='height:20px;font-size:-3'/>
+		</td>
+		<td>
+			<P>
+				<label for="US_Date_Label">美國交易日期:</label>
+				<label ID="US_F_Date">{{parameter.US_TradingDate}}</label>
+			</P><input type='button' id='pickup_USdate' value='Set US Trading Date' style='height:20px;font-size:-3'/>
+		</td>
+		<td>
+			<P>
+				<label for="CN_Date_Label">中國交易日期:</label>
+				<label ID="CN_F_Date">{{parameter.CN_TradingDate}}</label>
+				</P><input type='button' id='pickup_CNdate' value='Set CN Trading Date' style='height:20px;font-size:-3'/>
+		</td>
+	</tr>
+<table>
 <table id="tradingdate_table"></table> 
 <div id="pager"></div> 
 

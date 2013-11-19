@@ -1,3 +1,4 @@
+
 import sys
 import os.path
 # Django settings for finance_trading project.
@@ -183,9 +184,11 @@ INSTALLED_APPS = (
     'inwin.fund',
     'inwin.stock',
     #'inwin.account',
+    'inwin.fund.plugins.marketdata',
     'inwin.fund.plugins.orderquery',
     'inwin.stock.plugins.orderquery',
     'inwin.data.plugins.config',
+    'inwin.account.plugins.openaccount',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -263,3 +266,9 @@ LOGGING = {
 #DEFAULT_CMS_TEMPLATES = ('Template One','Template Two',)
 #DEFAULT_TEMPLATE_DIRS = ('C:/Develop/finance_trading/finance_trading/static/template/',)
 #DEFAULT_STATICFILES_DIRS= ('C:/Develop/finance_trading/finance_trading/static/default/media/',)
+
+#The parameter setup for inwin
+US_Market=True
+HK_Market=True
+TW_Market=False
+TW_Market=False

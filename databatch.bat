@@ -12,10 +12,10 @@ python manage.py Import_Stock_Industry --stockindustryratio="data\stockindustryr
 python manage.py Import_Stock_Industry --stockconceptgroup="data\stockconceptgroup.txt"
 python manage.py Import_Stock_Industry --stockconceptgrouprelation="data\stockconceptgrouprelation.txt"
 
-python manage.py Import_DJStock --closefile="data\Close_US.txt" --market="US"
-python manage.py Import_DJStock --closefile="data\Close_USD_Update.txt" --market="US"
-python manage.py Import_DJStock --closefile="data\Close_USW_Update.txt" --market="US"
+python manage.py Import_DJStock --closefile="data\US_All.txt" --market="US"
+python manage.py Import_DJStock --closefile="data\USD_Update.txt" --market="US"
+python manage.py Import_DJStock --closefile="data\USW_Update.txt" --market="US"
 
-python manage.py Import_DJStock --closefile="data\Close_HK.txt" --market="HK"
-python manage.py Import_DJStock --closefile="data\Close_HKD_Update.txt" --market="HK"
-python manage.py Import_DJStock --closefile="data\Close_HKW_Update.txt" --market="HK"
+python manage.py Import_DJStock --closefile="data\HK_All.txt" --market="HK"
+python manage.py Import_DJStock --closefile="data\HKD_Update.txt" --market="HK"
+python manage.py Import_DJStock --closefile="data\HKW_Update.txt" --market="HK"

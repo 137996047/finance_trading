@@ -45,7 +45,7 @@ class fund_transaction(models.Model):
     F_Status= models.CharField(max_length=1, null=True, blank=True)
     F_Cost=models.DecimalField(max_digits=28, decimal_places=4, null=True, blank=True)
     F_Net=models.DecimalField(max_digits=28, decimal_places=4, null=True, blank=True)
-    F_SettleDate=models.DateTimeField('Settle Date')
+    F_SettleDate=models.DateTimeField('Settle Date', null=True, blank=True)
     F_Payable=models.DecimalField(max_digits=28, decimal_places=4, null=True, blank=True)
     F_Receivable=models.DecimalField(max_digits=28, decimal_places=4, null=True, blank=True)
     F_Note=models.CharField(max_length=128, null=True, blank=True)

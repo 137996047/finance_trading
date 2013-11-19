@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.conf import settings
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+import inwin.account.urls
 import inwin.stock.urls
 import inwin.fund.urls
 import inwin.data.urls
@@ -21,7 +22,7 @@ urlpatterns = patterns('',
     #fund_order accept django-form-designer post data
     #url(r'^allauth_accounts/', include('allauth.urls')),
     
-       
+    url(r'^account/', include(inwin.account.urls)),   
     url(r'^stock/', include(inwin.stock.urls)),
     url(r'^fund/', include(inwin.fund.urls)),
     url(r'^data/', include(inwin.data.urls)),

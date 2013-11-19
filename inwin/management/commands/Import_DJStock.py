@@ -58,13 +58,14 @@ class Command(BaseCommand):
                     tick_low = tline[4].encode('utf-8')
                     tick_close = tline[5].encode('utf-8')
                     tick_volume= tline[6].encode('utf-8')
-                    stockclose.objects.Insert(Symbol=tick_symbol,tDate=tick_date,Open=tick_open,High=tick_high,Low=tick_low,Close=tick_close,Volume=tick_volume)
+                    if Market!='HK' or tick_symbol<'2800':
+                        stockclose.objects.Insert(Symbol=tick_symbol,tDate=tick_date,Open=tick_open,High=tick_high,Low=tick_low,Close=tick_close,Volume=tick_volume)
                     #print "Insert:"+tick_symbol+" Date:"+ tick_date
                 except Exception, e:
                     print '(stockclose)Insert Error:'+tick_symbol+' ->'+unicode(e)+unicode(sys.exc_info()[0])      
                         
             f.close()
         except:
-            print "Unexpected error:", sys.exc_info()[0]
+            print "Unexpected error(file open ?):", sys.exc_info()[0]
             
         print '(stockclose) Finish Task !!! '
